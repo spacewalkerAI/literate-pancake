@@ -1,0 +1,179 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Subsequences\n\nThis file contains a blue exercise from the chapter on *Subsequences, lim sup and lim inf*.\nTo run this file we have to import some libraries.\nYou can ignore these."
+    },
+    {
+      "type": "code",
+      "text": "Set Printing Parentheses.\n\nRequire Import Reals.\nRequire Import Arith.Even.\nRequire Import ZArith.ZArith.\nRequire Import FunctionalExtensionality.\n\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.notations.notations.\nRequire Import Waterproof.load_database.Additional.\nRequire Import Waterproof.load_database.Intuition.\nRequire Import Waterproof.load_database.RealsAndIntegers.\nRequire Import Waterproof.databases.\nRequire Import Waterproof.set_search_depth.To_5.\nRequire Import Waterproof.theory.analysis.sequences_metric.\nRequire Import Waterproof.theory.analysis.subsequences_metric.\n\nGlobal Hint Resolve functional_extensionality : reals.\n\nOpen Scope metric_scope.\nSet Default Goal Selector \"!\".\nSet Default Timeout 5."
+    },
+    {
+      "type": "text",
+      "text": "\nPlease enter your names and group number here:"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-4"
+    },
+    {
+      "type": "text",
+      "text": "David Kiszkiel, Andreea Pirvulescu Group 1.04"
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-4"
+    },
+    {
+      "type": "text",
+      "text": "\n## Metric space $(X, \\mathrm{dist})$\nThe libraries above have already defined a metric space that we can use freely throughout this notebook."
+    },
+    {
+      "type": "code",
+      "text": "\nCheck X.\nCheck dist."
+    },
+    {
+      "type": "text",
+      "text": "## Waterproof syntax for subsequences\n"
+    },
+    {
+      "type": "code",
+      "text": "Section wp_syntax."
+    },
+    {
+      "type": "text",
+      "text": "\nWe use the same definitions for index sequences (`is_index_sequence`), subsequences (`is_subsequence`) and accumulation points (`is_accumulation_point`) as in the lecture notes. See for yourself:\n"
+    },
+    {
+      "type": "text",
+      "text": "Consider the following variables:"
+    },
+    {
+      "type": "code",
+      "text": "Variable n : (ℕ → ℕ).\nVariable a : (ℕ → X).\nVariable b : (ℕ → X).\nVariable p : X.\n"
+    },
+    {
+      "type": "text",
+      "text": "The following lines of code tell us the definitions of a.o. `is_index_sequence n`:"
+    },
+    {
+      "type": "code",
+      "text": "\nEval unfold is_index_sequence in \n  (is_index_sequence n).\nEval unfold is_subsequence in \n  (is_subsequence b a).\nEval unfold is_accumulation_point in \n  (is_accumulation_point p a)."
+    },
+    {
+      "type": "text",
+      "text": "\n**Proposition 10.3.1** from the lecture notes is also available in Waterproof as `equivalent_subsequence_convergence` which says the following: \n\nLet $x$ and $y$ be two sequences in $X$. If $y$ is a subsequence of $x$ and $x$ converges to $p ∈ X$ then $y$ converges to $p$ as well."
+    },
+    {
+      "type": "code",
+      "text": "Check equivalent_subsequence_convergence."
+    },
+    {
+      "type": "text",
+      "text": "\nMoreover, we have access to two important properties of index sequences, aptly named:\n- `index_sequence_property`: If $n$ is an index sequence then for all $k ∈ ℕ$ it holds that $n_k ≥ k\\,$."
+    },
+    {
+      "type": "code",
+      "text": "Check index_sequence_property."
+    },
+    {
+      "type": "text",
+      "text": "- `index_sequence_property2`: If $n$ is an index sequence then $n$ is an increasing sequence, i.e. for all $k_1, k_2 ∈ ℕ$ if $k_1 ≥ k_2$ then $n_{k_1} ≥ n_{k_2}\\,$."
+    },
+    {
+      "type": "code",
+      "text": "End wp_syntax.\n"
+    },
+    {
+      "type": "text",
+      "text": "### **Exercise 10.7.3.**"
+    },
+    {
+      "type": "code",
+      "text": "Section Ex_10_7_3."
+    },
+    {
+      "type": "text",
+      "text": "\nLet $a, b : ℕ \\to X$ be two sequences such that $a$ converges to some $p ∈ X$."
+    },
+    {
+      "type": "code",
+      "text": "Variable a b : (ℕ → X).\nVariable p : X.\nHypothesis a_converges_to_p : a ⟶ p."
+    },
+    {
+      "type": "text",
+      "text": "Consider the sequence $c : ℕ → X$ defined by\n$c_k := \\begin{cases}a_k &\\text{if } k \\text{ even}\\\\b_k &\\text{if } k \\text{ odd.}\\end{cases}$"
+    },
+    {
+      "type": "code",
+      "text": "Definition c (n : ℕ) := if (Nat.even n) then a n else b n."
+    },
+    {
+      "type": "text",
+      "text": "\nThe goal is to show that $p$ is an accumulation point of $c$."
+    },
+    {
+      "type": "text",
+      "text": "\nTo make the proof easier for you, we break it down into two steps.\nFirst, show that the sequence $n : ℕ → ℕ$ defined by $n_k := 2k$ is an index sequence."
+    },
+    {
+      "type": "code",
+      "text": "Definition n (k : nat) := (2 * k)%nat.\n\nLemma n_is_index_sequence : is_index_sequence n.\nProof."
+    },
+    {
+      "type": "text",
+      "text": "\n**Hint:** If you want to show a chain of (in)equalities in the natural numbers, use `%nat` after the chain like `(& n &= n + 0 &< n + 1)%nat` to indicate that everything you wrote needs to be interpreted in $ℕ$."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-3"
+    },
+    {
+      "type": "code",
+      "text": "Expand the definition of is_index_sequence.\n\nThat is, write the goal as (for all k:ℕ, (((n k)<(n(k+1)))%nat)).\n\nTake k:ℕ.\nIt holds that r: (2*k<(2*(k+1))).\nIt holds that rr: (&n k &=(2 * k)%nat &< (2 *(k+1))%nat &= n (k+1)).\nWe conclude that (((n k) < (n (k + 1)))%nat).\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-3"
+    },
+    {
+      "type": "text",
+      "text": "\nNow, for any $k$ we know that $n_k$ is even, and thus we also know that $c_{n_k}$ is equal to $a_{n_k}$.\nThis step is quite tedious in Waterproof, so we have shown that for you."
+    },
+    {
+      "type": "code",
+      "text": "Lemma c_n_k_eq_a_n_k : ∀ k : ℕ, c (n k) = a (n k).\nProof.\nTake k : ℕ.\nWe need to show that ((if Nat.even (n k) then a (n k) else b (n k)) \n  = a (n k)).\nBy double_is_even it holds that n_k_even : (Nat.even (n k) = true).\nWrite goal using (Nat.even (n k) = true) as\n  (a (n k) = a (n k)).\nWe conclude that (a (n k) = a (n k)).\nQed."
+    },
+    {
+      "type": "text",
+      "text": "\nFinally, show that $p$ is an accumulation point of $c$."
+    },
+    {
+      "type": "code",
+      "text": "Goal is_accumulation_point p c.\nProof.\nWe need to show that (∃ m : (ℕ → ℕ), is_index_sequence m ∧ (c ◦ m) ⟶ p).\nChoose m := n.\n\nWe show both statements. \n- We need to show that (is_index_sequence m).\n  By n_is_index_sequence we conclude that (is_index_sequence m).\n\n- We need to show that ((c ◦ m) ⟶ p ).\n  By a_converges_to_p it holds that a_cv_to_p : (a ⟶ p).\n  By equivalent_subsequence_convergence it suffices to show that (is_subsequence (c ◦ m) a)."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "Expand the definition of is_subsequence.\n\nThat is, write the goal as (\nthere exists m0 : ℕ ⇨ ℕ ,\n((is_index_sequence m0)\n∧ (for all k : ℕ,\n((c (m k)) = (a (m0 k)))))\n).\n\nChoose m0:=(n)%nat.\n\nWe show both statements.\n\n*We need to show that (\nis_index_sequence m0 ).\n\nBy n_is_index_sequence we conclude that (is_index_sequence m0).\n\n*We need to show that (\nfor all k : ℕ,\n((c (m k)) = (a (m0 k)))\n).\n\nTake k:ℕ.\nBy double_is_even it holds that rrr : (Nat.even (m k) = true).\n\nBy c_n_k_eq_a_n_k it holds that gr: (c (m k) = a (m k)).\n\nIt holds that rrrr: (m=m0).\n\nWe conclude that ((c (m k))=(a (m0 k))).\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "End Ex_10_7_3."
+    }
+  ]
+}

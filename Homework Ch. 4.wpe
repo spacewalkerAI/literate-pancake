@@ -1,0 +1,153 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Real numbers\n\nThis file contains the blue exercises from the chapter \"Real numbers\".\nTo run this file we have to import some libraries.\nYou can ignore these."
+    },
+    {
+      "type": "code",
+      "text": "Require Import Reals.\nRequire Import Waterproof.definitions.set_definitions.\nRequire Import Waterproof.notations.notations.\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.load_database.RealNumbers.\nRequire Import Waterproof.load_database.Subsets.\nRequire Import Waterproof.set_search_depth.To_5.\nRequire Import Waterproof.theory.analysis.sup_and_inf_new_definitions.\nRequire Import Waterproof.load_database.Intuition.\nRequire Import Waterproof.load_database.Firstorder.\n\nHint Unfold pred_R : subsets.\nHint Unfold Rminus : reals.\n\nOpen Scope R_scope.\n\nSet Default Goal Selector \"!\".\nSet Default Timeout 5."
+    },
+    {
+      "type": "text",
+      "text": "\nPlease enter your names and group number here:"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-4"
+    },
+    {
+      "type": "text",
+      "text": "David Kiszkiel, Andreea Pirvulescu Homework Group 1.04"
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-4"
+    },
+    {
+      "type": "text",
+      "text": "\n## **Subsets in Waterproof**\nTwo important concepts from this chapter are the **supremum** and the **infimum**, these are defined for subsets of the reals.\n\nIn Waterproof, we write `B : subset_R` to indicate that $B$ is a subset of the real numbers $\\mathbb{R}\\,$. We write `B x` to indicate that $x$ is in the subset $B$."
+    },
+    {
+      "type": "text",
+      "text": "## **Exercise 4.9.1.**\nShow that for all $a, b \\in \\mathbb{R}$, if $a < b$ then $\\inf [a, b) = a$."
+    },
+    {
+      "type": "code",
+      "text": "\nGoal for all a b : ℝ, a < b ⇒ is_inf [a,b) a. \nProof. \n"
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nWith\n```\nExpand the definition of is_inf.\n```\nyou can ask Waterproof to write out the definition of is_inf.\n\nTo keep your proof readable, Waterproof will ask you to write out what you need to show after expanding the definition."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-3"
+    },
+    {
+      "type": "code",
+      "text": "Take a,b:ℝ.\nAssume alb: (a<b).\nExpand the definition of is_inf.\nThat is, write the goal as (\nis_lower_bound [a, b) a\n∧ (for all l : ℝ,\nis_lower_bound [a, b) l ⇨ l ≤ a)\n).\n\nIt holds that alw: (is_lower_bound [a, b) a).\n\nWe show both statements.\n-We need to show that (is_lower_bound [a, b) a).\nWe conclude that (is_lower_bound [a, b) a).\n-We need to show that (for all l : ℝ,\nis_lower_bound [a, b) l ⇨ l ≤ a).\nTake l:ℝ.\nAssume lwrbnd: (is_lower_bound [a,b) l).\nWe conclude that ((l≤a)).\n\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-3"
+    },
+    {
+      "type": "text",
+      "text": "## **Exercise 4.9.2. (Proposition 4.4.3.)**"
+    },
+    {
+      "type": "code",
+      "text": "Section Prop_4_4_3."
+    },
+    {
+      "type": "text",
+      "text": "\nProposition 4.4.3. starts with:\n\n*Let $A$ be a subset of $\\mathbb{R}$. Assume that $A$ is non-empty and bounded from above.*\n\nWe already do this for you:"
+    },
+    {
+      "type": "code",
+      "text": "\n\nVariable A : subset_R.\nHypothesis A_bdd_above : (exists b : ℝ, is_upper_bound A b).\nHypothesis A_nonempty : (exists a : ℝ, A a)."
+    },
+    {
+      "type": "text",
+      "text": "Subset $A$ and the assumptions $A$ being non-empty and bounded from above are now available to you in the exercise."
+    },
+    {
+      "type": "text",
+      "text": "\nNext, we define what it means for a number $x$ to be the maximum of a subset $C$."
+    },
+    {
+      "type": "code",
+      "text": "Definition is_max (C : subset_R) (x : ℝ) := \n  (C x) ∧ (is_upper_bound C x)."
+    },
+    {
+      "type": "text",
+      "text": "\nTo prove Proposition 4.3.3., you need to show that: for all $y ∈ ℝ$, if $y$ is the supremum of $A$ and $y$ is in $A$ then $y$ is the maximum of $A$."
+    },
+    {
+      "type": "code",
+      "text": "Goal for all y : ℝ, ((is_sup A y) ∧ (A y)) ⇒ is_max A y.\nProof."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-1"
+    },
+    {
+      "type": "code",
+      "text": "Take y:ℝ.\nAssume r:((is_sup A y) ∧ (A y)).\nWe conclude that (is_max A y).\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-1"
+    },
+    {
+      "type": "code",
+      "text": "End Prop_4_4_3."
+    },
+    {
+      "type": "text",
+      "text": "\n## **Exercise 4.9.3.**\nShow that $\\sup[0,4) = 4\\,$."
+    },
+    {
+      "type": "code",
+      "text": "Goal is_sup [0,4) 4.\nProof."
+    },
+    {
+      "type": "text",
+      "text": "\nWe help you get started. This exercise is solved more easily if we use the alternative characterization of the supremum (see Proposition 4.3.1.)."
+    },
+    {
+      "type": "code",
+      "text": " \nIt suffices to show that\n((is_upper_bound [0, 4) 4)\n  ∧ \n  (for all ε : ℝ, ε > 0 ⇒\n     there exists c : [0, 4),\n        4 - ε < c))."
+    },
+    {
+      "type": "text",
+      "text": "**IMPORTANT:** If $A$ is a subset of $ℝ$ and if you need to show (in Waterproof) a statement of the form \n\n```\n∃ x : A, P x\n```\n\n(where `P x` is some expression, e.g. `4 - ε < x`), in Waterproof you first need to reformulate the statement by saying\n\n```\nIt suffices to show that (∃ x : ℝ, A x ∧ P x).\n```\n\nAfterwards, you can continue with\n```\nChoose x := ...\n```"
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nClick to open hint.\n<hint>\nIt is helpful to split the cases $ε < 2$ and $ε ≥ 2$, by writing\n\n```\nEither (ε < 2) or (ε ≥ 2).\n```\n\nAlternatively, you can make use of the minimum function `Rmin`. The expression `Rmin x y` gives the minimum of two real numbers $x$ and $y$."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "We show both statements.\n-We need to show that (is_upper_bound [0, 4) 4).\nWe conclude that (is_upper_bound [0,4) 4).\n-We need to show that ((for all ε : ℝ, ε > 0 ⇒\n     there exists c : [0, 4),\n        4 - ε < c)).\nTake ε:ℝ.\nAssume egz: (ε>0).\nEither (ε≥2) or (ε<2).\n+Case (ε≥2).\n\nIt suffices to show that (∃ c : ℝ, [0,4) c ∧ 4-ε < c).\nChoose c:=3.\nIt holds that f: ([0,4) c).\nIt holds that h: (4-ε<c).\nWe conclude that ([0, 4) c ∧ 4 - ε < c).\n\n+Case (ε<2).\nIt suffices to show that (∃ c : ℝ, [0,4) c ∧ 4-ε < c).\nChoose c:= (4-ε/2).\nIt holds that f: ([0,4) c).\nIt holds that h: (4-ε<c).\nWe conclude that ([0, 4) c ∧ 4 - ε < c).\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-2"
+    }
+  ]
+}

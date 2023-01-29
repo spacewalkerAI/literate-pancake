@@ -1,0 +1,113 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Limits and continuity\n\nThis file contains exercises 13.11.2 from the chapter \"Limits and continuity\".\nTo run this file we have to import some libraries.\nYou can ignore these."
+    },
+    {
+      "type": "code",
+      "text": "Require Import Rbase.\nRequire Import Rbasic_fun.\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.notations.notations.\nRequire Import Waterproof.load_database.RealNumbers.\nRequire Import Waterproof.set_search_depth.To_5.\nRequire Import Waterproof.load_database.Intuition.\n\nSet Printing Parentheses.\nSet Default Goal Selector \"!\".\nSet Default Timeout 5."
+    },
+    {
+      "type": "text",
+      "text": "\nPlease enter your names and group number here:"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-1"
+    },
+    {
+      "type": "text",
+      "text": "Andreea Pirvulescu Group 1.04"
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-1"
+    },
+    {
+      "type": "text",
+      "text": "\n## Definitions\nIn accordance to the lecture notes we have the following definitions for domain $D = ℝ$)."
+    },
+    {
+      "type": "text",
+      "text": "\nWhen a point $a ∈ ℝ$ is an accumulation point of $D = ℝ\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_accumulation_point (a : R) :=\n  for all ε : R, (ε > 0) ⇒\n    there exists x : R, 0 < |x - a| < ε."
+    },
+    {
+      "type": "text",
+      "text": "When a point $a ∈ ℝ$ is an isolated point of $D = ℝ\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_isolated_point (a : R) :=\n  exists ε : R, (ε > 0) ∧\n    for all x : R, |x - a| = 0 ∨ (ε ≤ |x - a|)."
+    },
+    {
+      "type": "text",
+      "text": "What it means for a function $f : ℝ \\to ℝ$ to converge to $q$ as a $x$ goes to $a\\,$, i.e. $\\lim_{x \\to a} f(x) = q\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition limit_in_point (f : R → R) (a : R) (q : R) :=\n for all ε : R, (ε > 0) ⇒\n   there exists δ : R, (δ > 0) ∧\n     for all x : R,\n       (0 < |x - a| < δ) ⇒ (|(f x) - q| < ε)."
+    },
+    {
+      "type": "text",
+      "text": "When a function $f : ℝ \\to ℝ$ is continuous in a point $a∈ D = ℝ\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_continuous_in (f : R → R) (a : R) :=\n  ((is_accumulation_point a) ∧ (limit_in_point f a (f a))) ∨ (is_isolated_point a)."
+    },
+    {
+      "type": "text",
+      "text": "\n## **Exercise 13.11.2**\nConsider the function $f : D \\to ℝ$ defined by\n$$\n    f(x) := x~~~~~~\\text{for } x \\in ℝ\n$$\nwhere $D = ℝ$."
+    },
+    {
+      "type": "code",
+      "text": "Definition f (x : R) := x."
+    },
+    {
+      "type": "text",
+      "text": "\nProve that for every $a ∈ D$, the function is continuous in $a$."
+    },
+    {
+      "type": "code",
+      "text": "\nGoal for all a : R, is_continuous_in f a.\nProof."
+    },
+    {
+      "type": "text",
+      "text": "We help you get started."
+    },
+    {
+      "type": "code",
+      "text": "Take a : R.\nWe need to show that (((is_accumulation_point a) ∧ (limit_in_point f a (f a))) \n  ∨ (is_isolated_point a)).\n"
+    },
+    {
+      "type": "text",
+      "text": "You have to decide which of these you are going to show. Either that\n- $a$ is an accumulation point and $\\lim_{x \\to a} f(x) = f (a)$, or\n- $a$ is an isolated point.\n\nYou can tell Waterproof which option you are going to show by using the `It suffices to show that (...).` tactic with `(...)` replaced by the proposition you want to prove."
+    },
+    {
+      "type": "hint",
+      "text": "How to prove a goal like `x < y < z`.\n<hint>\nIn this proof you might at some point need to show a goal of the form `x < y < z`. This is shorthand notation for `(x < y) ∧ (y < z)`. Hence you can split the proof by using the `We show both statements.`-tactic."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "It suffices to show that ((is_accumulation_point a) ∧ (limit_in_point f a (f a))).\nWe show both statements.\n-We need to show that (\nis_accumulation_point a\n).\nWe need to show that (for all ε : ℝ,((ε > 0)⇨ there exists x : ℝ ,(0 < | x - a | < ε))).\nTake ε:ℝ.\nAssume eg0: (ε>0).\nChoose x:=(ε/2+a).\nWe show both statements.\n*We need to show that (\n0 < (| x - a |) ).\nWe conclude that (0 < (| x - a |)).\n*We need to show that ((| x - a |)<ε).\nIt holds that br: (| x - a |=|ε/2|).\nIt holds that brr: (|ε/2|=ε/2).\nWe conclude that (& | x - a | &= |ε/2| &< ε).\n\n-We need to show that (limit_in_point f a (f a)).\nWe need to show that (for all ε : R, (ε > 0) ⇒\n   there exists δ : R, (δ > 0) ∧\n     for all x : R,\n       (0 < |x - a| < δ) ⇒ (|(f x) - a| < ε)).\n\nTake ε:ℝ.\nAssume eg0: (ε>0).\nChoose δ:=ε.\nWe show both statements.\n*We need to show that (\nδ > 0 ).\nWe conclude that (δ>0).\n\n*We need to show that (for all x : R,\n       (0 < |x - a| < δ) ⇒ (|(f x) - a| < ε)).\nTake x:ℝ.\nAssume assum: (0 < | x - a | < δ).\nWe conclude that ((| (f x) - a |) < ε).\n\n\n\n\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-2"
+    }
+  ]
+}

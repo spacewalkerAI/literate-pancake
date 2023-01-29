@@ -1,0 +1,141 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Limits and continuity\n\nThis file contains exercises 13.11.3 from the chapter \"Limits and continuity\".\nTo run this file we have to import some libraries.\nYou can ignore these."
+    },
+    {
+      "type": "code",
+      "text": "Require Import Rbase.\nRequire Import Rbasic_fun.\nRequire Import Rlimit.\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.notations.notations.\nRequire Import Waterproof.load_database.RealNumbers.\nRequire Import Waterproof.load_database.Subsets.\nRequire Import Waterproof.set_search_depth.To_5.\nRequire Import Waterproof.load_database.Intuition.\n\nRequire Import Waterproof.theory.analysis.metric_spaces.\n\nSet Default Goal Selector \"!\".\nSet Default Timeout 5.\n\nGlobal Hint Resolve Nat.eq_dec : decidability.\nGlobal Hint Resolve Rabs_minus_sym : reals.\n\nLemma aux1 : for all n m : ℕ, (n = m) ⇒ |m - n| = |n - n|.\nProof.\n  Take n, m : ℕ. Assume n_eq_m : (n = m).\n  We conclude that (& |m - n| &= |m - m| &= m - m &= 0 &= n - n &= |n - n|).\nQed.\nGlobal Hint Resolve aux1 : reals."
+    },
+    {
+      "type": "text",
+      "text": "\nPlease enter your names and group number here:"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-1"
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-1"
+    },
+    {
+      "type": "text",
+      "text": "\nWe introduce the metric space $(Y, \\mathrm{dist}_Y)$"
+    },
+    {
+      "type": "code",
+      "text": "Variable Y : Metric_Space.\nNotation \"'distY'\" := (dist Y)."
+    },
+    {
+      "type": "text",
+      "text": "You can use these terms throughout the notebook.\n"
+    },
+    {
+      "type": "text",
+      "text": "## Definitions\nIn accordance to the lecture notes we have the following definitions for domain $D = ℕ$)."
+    },
+    {
+      "type": "text",
+      "text": "\nWhen a point $a ∈ ℝ$ is an accumulation point of $D = ℕ\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_accumulation_point (a : R) :=\n  for all ε : R, (ε > 0) ⇒\n    there exists n : ℕ, 0 < |n - a| < ε."
+    },
+    {
+      "type": "text",
+      "text": "When a point $a ∈ ℝ$ is an isolated point of $D = ℕ\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_isolated_point (a : R) :=\n  exists ε : R, (ε > 0) ∧\n    for all n : ℕ, (|n - a| = 0) ∨ (ε ≤ |n - a|)."
+    },
+    {
+      "type": "text",
+      "text": "What it means for a function $f : ℕ \\to Y$ to converge to $q$ as a $x$ goes to $a\\,$, i.e. $\\lim_{x \\to a} f(x) = q\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition limit_in_point (f : ℕ → Y) (a : ℕ) (L : Y) :=\n for all ε : R, (ε > 0) ⇒\n   there exists δ : R, (δ > 0) ∧\n     for all n : ℕ,\n       (0 < |n - a| < δ) ⇒ (distY (f n) L < ε)."
+    },
+    {
+      "type": "text",
+      "text": "When a function $f : ℕ \\to Y$ is continuous in a point $a∈ D = ℕ\\,$:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_continuous_in (f : ℕ → Y) (a : ℕ) :=\n  ((is_accumulation_point a) ∧ (limit_in_point f a (f a))) ∨ (is_isolated_point a)."
+    },
+    {
+      "type": "text",
+      "text": "When a function $f:ℕ\\to Y$ is continuous:"
+    },
+    {
+      "type": "code",
+      "text": "Definition is_continuous (f : ℕ → Y) :=\n  for all a : ℕ, is_continuous_in f a."
+    },
+    {
+      "type": "text",
+      "text": "### Helpful lemma\nIn the exercise below you can use the following lemma which says that\n$$\n  \\text{for all } n, m : ℕ,\n    \\text{ if } (n ≠ m) \\text{ then } {1 ≤ |m - n|}\\,.\n$$\nThe proof is a bit involved, you can ignore it."
+    },
+    {
+      "type": "code",
+      "text": "Lemma hint1 : for all n m : ℕ, (n ≠ m) ⇒ (1 ≤ | m - n |).\nProof.\n  Take n, m : ℕ. Assume that n_neq_m : (n ≠ m).\n  By nat_total_order it holds that n_gt_m_or_lt : (n > m ∨ n < m)%nat.\n  Because n_gt_m_or_lt either n_gt_m or n_lt_m.\n  + Case (n > m)%nat.\n    It holds that H1 : (n ≥ S m)%nat.\n    By S_INR it holds that H2 : (m + 1 = S m).\n    It holds that H3 : (m + 1 - m = S m - m).\n    It holds that H4 : ((S m) ≤ n).\n    It holds that H5 : ((S m) - m ≤ n - m).\n    We conclude that (& 1 &= m + 1 - m &= (S m) - m\n                          &≤ n - m &= |n - m| &= |m - n|).\n  + Case (n < m)%nat.\n    It holds that H1 : (S n ≤ m)%nat.\n    By S_INR it holds that H2 : (n + 1 = S n).\n    It holds that H3 : (n + 1 - n = S n - n).\n    It holds that H4 : ((S n) ≤ m).\n    It holds that H5 : ((S n) - n ≤ m - n).\n    We conclude that (& 1 &= n + 1 - n &= (S n) - n\n                          &≤ m - n &= |m - n|).\nQed."
+    },
+    {
+      "type": "text",
+      "text": "\n## **Exercise 13.11.3**\nLet $a : ℕ \\to Y$ be a function. "
+    },
+    {
+      "type": "code",
+      "text": "Variable a : ℕ → Y."
+    },
+    {
+      "type": "text",
+      "text": "Show that $a : ℕ \\to Y$ is continuous."
+    },
+    {
+      "type": "code",
+      "text": "\nGoal is_continuous a.\nProof."
+    },
+    {
+      "type": "text",
+      "text": "We help you get started."
+    },
+    {
+      "type": "code",
+      "text": "We need to show that (for all n : ℕ, is_continuous_in a n).\nTake n : ℕ.\nWe need to show that (((is_accumulation_point n) ∧ (limit_in_point a n (a n))) \n  ∨ (is_isolated_point n)).\n"
+    },
+    {
+      "type": "text",
+      "text": "You have to decide which of these you are going to show. Either that\n- $n$ is an accumulation point and $\\lim_{x \\to n} a(x) = a(n)$, or\n- $n$ is an isolated point.\n\nYou can tell Waterproof which option you are going to show by using the `It suffices to show that (...).` tactic with `(...)` replaced by the proposition you want to prove."
+    },
+    {
+      "type": "text",
+      "text": "In the proof, you might want to use the following tactic at some point:"
+    },
+    {
+      "type": "hint",
+      "text": "`Either (case_1) or (case_2).`\n<hint>\nDistinguishes between two cases `case_1` and `case_2` if either `case_1` or `case_2` holds (i.e. they do not hold simultaneously)."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "It suffices to show that (is_isolated_point n).\nExpand the definition of is_isolated_point.\n\nThat is, write the goal as (there exists ε : ℝ ,ε > 0 ∧ (for all n0 : ℕ, | n0 - n | = 0 ∨ ε ≤ | n0 - n |)).\nChoose ε:=1.\nIt holds that eg0: (ε>0).\nIt suffices to show that (for all n0 : ℕ,\n| n0 - n | = 0 ∨ ε ≤ | n0 - n |).\nTake n0:ℕ.\nEither (n0≠n) or (n0=n).\n-Case (n0≠n).\nIt suffices to show that (ε ≤ | n0 - n |).\nBy hint1 it holds that gr: (1≤| n0 - n |).\nWe conclude that (ε ≤ | n0 - n |).\n-Case (n0=n).\nIt suffices to show that (| n0 - n | = 0).\nIt holds that br: (n0 - n=0).\nWe conclude that (& | n0 - n | &= | 0 | &= 0 ).\n\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-2"
+    }
+  ]
+}

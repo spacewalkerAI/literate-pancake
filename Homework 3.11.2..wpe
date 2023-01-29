@@ -1,0 +1,57 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Proofs in Analysis 3.11.2\n\nThis file contains Exercise 3.11.2 from the Chapter \"Proofs in Analysis\"."
+    },
+    {
+      "type": "code",
+      "text": "Require Import Reals.\nRequire Import Qreals.\nRequire Import Waterproof.definitions.set_definitions.\nRequire Import Waterproof.notations.notations.\n\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.load_database.RealNumbers.\nRequire Import Waterproof.load_database.Subsets.\n\nOpen Scope R_scope.\nGlobal Hint Resolve Rplus_lt_compat : reals.\n\nSection proofs_in_analysis.\n\nSet Default Goal Selector \"!\".\nSet Default Timeout 5."
+    },
+    {
+      "type": "text",
+      "text": "Please enter your name and group number here:"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-3"
+    },
+    {
+      "type": "text",
+      "text": "Andreea Pirvulescu Homework group 1.04"
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-3"
+    },
+    {
+      "type": "text",
+      "text": "## **Exercise 3.11.2**\n\nNext, show that for all $x ∈ ℝ$, there exists $y ∈ ℝ$ such that for all $u∈ ℝ$, if $u >0$ then there exists an $v ∈ \\mathbb{R}$ such that $x + u < y + v$."
+    },
+    {
+      "type": "code",
+      "text": "Lemma exercise_2 :\n  ∀ x : ℝ,\n    ∃ y : ℝ,\n      ∀ u : ℝ,\n        u > 0 ⇒\n          ∃ v : ℝ,\n            v > 0 ∧ x + u < y + v.\nProof."
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nRecall that you need to use bullet points after writing `We show both statements.`"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "Take x:ℝ.\nChoose y:= (x+1).\nTake u:ℝ.\nAssume ugt0: (u>0).\nChoose v:=u.\nIt holds that vr: (v>0).\nIt holds that br: (x+u<y+v).\nWe conclude that (v > 0 ∧ x + u < y + v).\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-2"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Proofs in Analysis 3.11.1\n\nThis file contains Exercise 3.11.1 from the Chapter \"Proofs in Analysis\"."
+    },
+    {
+      "type": "code",
+      "text": "Require Import Reals.\nRequire Import Qreals.\nRequire Import Waterproof.definitions.set_definitions.\nRequire Import Waterproof.notations.notations.\n\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.load_database.RealNumbers.\nRequire Import Waterproof.load_database.Subsets.\n\nOpen Scope R_scope.\nGlobal Hint Resolve Rplus_lt_compat : reals.\n\nSection proofs_in_analysis.\n\nSet Default Goal Selector \"!\".\nSet Default Timeout 5."
+    },
+    {
+      "type": "text",
+      "text": "Please enter your name and group number here:"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-3"
+    },
+    {
+      "type": "text",
+      "text": "Andreea Pirvulescu Homework group 1.04"
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-3"
+    },
+    {
+      "type": "text",
+      "text": "## **Exercise 3.11.1: upper bound**\n\nShow that there exists an $M ∈ ℝ$ such that for all $x∈ [0, 5]$ it holds that $x ≤ M$.\nIn WaterProof, you should prove the following lemma."
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nIf you want to show that an element exists, one way to do that is by picking a specific element and by showing that it satisfies some properties.\nIn WaterProof, you can specify a value by using\n\n```Choose```(\\*name*) ```:=```( (\\*value*) )```.```"
+    },
+    {
+      "type": "code",
+      "text": "Lemma upper_bound :\n  ∃ M : ℝ,\n    ∀ x : [0,5], x ≤ M.\nProof."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-1"
+    },
+    {
+      "type": "code",
+      "text": "\nChoose M:=6.\nTake x : [0,5].\nIt holds that xgtgtgtg : (x ≤ 5).\nWe conclude that (x ≤ M).\nQed."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-1",
+      "text": "Take"
+    }
+  ]
+}
